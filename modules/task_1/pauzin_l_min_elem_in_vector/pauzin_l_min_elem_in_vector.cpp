@@ -1,5 +1,5 @@
 // Copyright 2019 Pauzin Leonid
-#include <mpi.h>	
+#include <mpi.h>
 #include <vector>
 #include <random>
 #include <ctime>
@@ -26,7 +26,7 @@ int minElemInVec(const std::vector <int> global_vec, int n) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   const int delta = n / size;
-  const int remainder = n % size; 
+  const int remainder = n % size;
   std::vector<int> local_vec(delta);
   if (n < size) {
     if (rank == 0) {

@@ -4,7 +4,7 @@
 #include <vector>
 #include "./pauzin_l_min_elem_in_vector.h"
 
-TEST(Parallel_Min_In_Vector_MPI, Test_On_Default_Vec) { 
+TEST(Parallel_Min_In_Vector_MPI, Test_On_Default_Vec) {
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   std::vector<int> vec;
@@ -17,7 +17,7 @@ TEST(Parallel_Min_In_Vector_MPI, Test_On_Default_Vec) {
   if (rank == 0) {
     ASSERT_EQ(0, minElem);
   }
-} 
+}
 
 TEST(Parallel_Min_In_Vector_MPI, Test_Vector_With_Given_Values) {
   int rank;
@@ -48,16 +48,16 @@ TEST(Parallel_Min_In_Vector_MPI, Test_On_Vec_With_Const) {
 
 
 int main(int argc, char** argv) {
-	::testing::InitGoogleTest(&argc, argv);
+  ::testing::InitGoogleTest(&argc, argv);
   MPI_Init(&argc, &argv);
 
-	::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
-	::testing::TestEventListeners& listeners =
-		::testing::UnitTest::GetInstance()->listeners();
+  ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
+  ::testing::TestEventListeners& listeners =
+    ::testing::UnitTest::GetInstance()->listeners();
 
-	listeners.Release(listeners.default_result_printer());
-	listeners.Release(listeners.default_xml_generator());
+  listeners.Release(listeners.default_result_printer());
+  listeners.Release(listeners.default_xml_generator());
 
-	listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
-	return RUN_ALL_TESTS();
+  listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
+  return RUN_ALL_TESTS();
 }
