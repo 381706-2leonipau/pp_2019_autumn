@@ -7,8 +7,7 @@
 #include "../../../modules/task_1/pauzin_l_min_elem_in_vector/pauzin_l_min_elem_in_vector.h"
 
 
-int getSequentialMin(std::vector<int> vec) {
-  const int  n = vec.size();
+int getSequentialMin(std::vector<int> vec, int n) {
   int min = vec[0];
   for (int i = 0; i < n; i++) {
     if (min > vec[i]) {
@@ -30,7 +29,7 @@ int minElemInVec(const std::vector <int> global_vec, int n) {
   std::vector<int> local_vec(delta);
   if (n < size) {
     if (rank == 0) {
-      rezult = getSequentialMin(global_vec);
+      rezult = getSequentialMin(global_vec, n);
       return rezult;
     } else {
       return rezult;
@@ -41,17 +40,11 @@ int minElemInVec(const std::vector <int> global_vec, int n) {
     for (int proc = 1; proc < size; proc++) {
       MPI_Send(&global_vec[0] + proc * delta + remainder, delta, MPI_INT, proc, 0, MPI_COMM_WORLD);
     }
-  }
-  if (rank == 0) {
-    min = global_vec[0];
-    for (int i = 0; i < delta + remainder; i++) {
-      min = std::min(min, global_vec[i]);
-    }
+    min = getSequentialMin(global_vec, delta);
   } else {
     MPI_Status status;
     MPI_Recv(&local_vec[0], delta, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
-    min = local_vec[0];
-    min = getSequentialMin(local_vec);
+    min = getSequentialMin(local_vec, delta);
   }
 
   MPI_Reduce(&min, &rezult, 1, MPI_INT, MPI_MIN, 0, MPI_COMM_WORLD);
