@@ -18,7 +18,7 @@ TEST(Parallel_Min_In_Vector_MPI, Test_On_Default_Vec) {
   }
 }
 
-TEST(Parallel_Min_In_Vector_MPI, Test_With_Random) { 
+TEST(Parallel_Min_In_Vector_MPI, Test_With_Random) {
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   const int count_size_vector = 100;
@@ -27,8 +27,8 @@ TEST(Parallel_Min_In_Vector_MPI, Test_With_Random) {
     vec = getRandomVector(count_size_vector);
   }
   int minElem = minElemInVec(vec, count_size_vector);
-   if (rank == 0) {
-	int minElemSeq = getSequentialMin(vec, count_size_vector);
+  if (rank == 0) {
+    int minElemSeq = getSequentialMin(vec, count_size_vector);
     ASSERT_EQ(minElem, minElemSeq);
   }
 }
