@@ -1,6 +1,7 @@
 // Copyright 2019 Pauzin Leonid
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
+#include <algorithm>
 #include <vector>
 #include "./pauzin_l_min_elem_in_vector.h"
 
@@ -28,8 +29,8 @@ TEST(Parallel_Min_In_Vector_MPI, Test_With_Random) {
   }
   int minElem = minElemInVec(vec, count_size_vector);
   if (rank == 0) {
-    int minElemSeq = getSequentialMin(vec, count_size_vector);
-    ASSERT_EQ(minElem, minElemSeq);
+    std::vector<int>::iterator minElemSeq = std::min_element(vec.begin(), vec.end());
+    ASSERT_EQ(minElem, *minElemSeq);
   }
 }
 
