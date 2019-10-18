@@ -10,9 +10,7 @@
 int getSequentialMin(std::vector<int> vec, int n) {
   int min = vec[0];
   for (int i = 0; i < n; i++) {
-    if (min > vec[i]) {
-      min = vec[i];
-    }
+    min = std::min(min, vec[i]);
   }
   return min;
 }
@@ -40,7 +38,7 @@ int minElemInVec(const std::vector <int> global_vec, int n) {
     for (int proc = 1; proc < size; proc++) {
       MPI_Send(&global_vec[0] + proc * delta + remainder, delta, MPI_INT, proc, 0, MPI_COMM_WORLD);
     }
-    min = getSequentialMin(global_vec, delta);
+    min = getSequentialMin(global_vec, delta + remainder);
   } else {
     MPI_Status status;
     MPI_Recv(&local_vec[0], delta, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
