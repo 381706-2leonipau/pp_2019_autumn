@@ -1,6 +1,20 @@
 [![Build Status](https://travis-ci.com/allnes/pp_2019_autumn.svg?branch=master)](https://travis-ci.com/allnes/pp_2019_autumn)
 [![Build status](https://ci.appveyor.com/api/projects/status/dye49wsp7ij15gdo/branch/master?svg=true)](https://ci.appveyor.com/project/allnes/pp-2019-autumn/branch/master)
 
+## Как собрать проект
+
+git submodule update --init --recursive
+
+mkdir build
+
+cd build
+
+cmake -D USE_MPI=ON ..
+
+cd ..
+
+cmake --build build --config RELEASE
+
 # Mastering parallel programming
 The following parallel programming technologies are considered in practice:
 * `MPI`
