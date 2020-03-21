@@ -15,6 +15,8 @@ cd ..
 
 cmake --build build --config RELEASE
 
+make //FOR LINUX
+
 # Mastering parallel programming
 The following parallel programming technologies are considered in practice:
 * `MPI`
